@@ -188,10 +188,17 @@ Follow [Prerequisites](#prerequisites) section to install AWS CLI and Session Ma
 
 #### 2. Configure SSH connection
 
-Follow [the documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-enable-ssh-connections.html#ssh-connections-enable)
-to update the SSH configuration file to allow SSH connections through Session Manager.
+If you have a default profile setup, follow [the documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-enable-ssh-connections.html#ssh-connections-enable)to update the SSH configuration file to allow SSH connections through Session Manager.
 It allows running a proxy command that starts a Session Manager session and transfer all data through opened connection.
 </br></br>
+
+If you do not have a default profile setup or are using a named profile, edit the documented instruction to include _--region_ _--profile_ flags. For example: 
+
+```bash
+#on macOS
+host i-* mi-*
+  ProxyCommand sh -c "aws ssm start-session --region intended_region --profile profile_name --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+```
 
 #### 3. Generate SSH keys
 
